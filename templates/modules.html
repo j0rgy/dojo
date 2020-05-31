@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create or Edit a Plan
+{% endblock %}
+
+
+{% block script %}
+    
+    <script>
+        var idNum = 0;
+        $(document).ready(function(){
+            $("button").click(function(){
+                $("ol").append("<li id=" + idNum + ">list item</li>")
+                idNum++;
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    
+    <button>Add new list item</button>
+    <ol>
+        <li>list item</li>
+        <li>list item</li>
+        <li>list item</li>
+    </ol>
+    
+{% endblock %}

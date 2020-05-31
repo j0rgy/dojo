@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create a Plan
+{% endblock %}
+
+{% block main %}
+
+    <form action="/create" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="name" placeholder="Plan name" type="text">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" name="description" rows="3" placeholder="Description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="private">Make public?</label>
+            <select class="form-control" name="private">
+              <option>Public</option>
+              <option>Private</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Next: Add Modules</button>
+        </div>
+    </form>
+
+{% endblock %}
