@@ -23,6 +23,8 @@ Session(application)
 
 # connecting to the database  
 connection = sqlite3.connect("dojo.db", check_same_thread=False) 
+
+# Request column headers with sqlite3 queries, allowing row["column"]
 connection.row_factory = sqlite3.Row
 db = connection.cursor() 
 
@@ -82,7 +84,7 @@ def create():
         if not plan_id:
             return render_template("create.html", error = "Problem fetching plan id.")
         else:
-            return render_template(url_for('edit', plan_id=plan_id))
+            return redirect(url_for('edit', plan_id=plan_id))
         
     return render_template("create.html", error="Something went wrong")
 
@@ -92,15 +94,31 @@ def edit(plan_id):
     plan = get_plan(plan_id)
 
     if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+        name = request.form['name']
+        description = request.form['description']
+        resource_format = request.form['resource_format']
+        url = request.form['url']
         error = None
 
-        if not title:
+        if not name:
             error = 'Title is required.'
+            flash(error, 'danger')
+        
+        if not description:
+            error = 'Description is required.'
+            flash(error, 'danger')
+        
+        if not url:
+            error = 'URL is required.'
+            flash(error, 'danger')
+        
+        if not resource_format:
+            error = 'Resource type is required'
+            flash(error, 'danger')
 
         if error is not None:
-            flash(error)
+            return redirect(url_for('edit', plan_id=plan_id))
+            
         else:
             db.execute(
                 'UPDATE post SET title = ?, body = ?'
